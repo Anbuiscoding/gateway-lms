@@ -1,0 +1,13 @@
+{
+  "name": "Gateway LMS",
+  "short_name": "Gateway",
+  "description": "Live classes, code-along lessons, assignments and attendance for Gateway Software Solutions.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#060e17",
+  "theme_color": "#060e17",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

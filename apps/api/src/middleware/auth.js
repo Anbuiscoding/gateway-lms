@@ -1,0 +1,4 @@
+import jwt from 'jsonwebtoken';
+import { User } from '../models/User.js';
+export async function requireAuth(req, res, next) { try { const token = req.headers.authorization?.replace('Bearer ', ''); if (!token) return res.status(401).json({ success:false, error:{code:'UNAUTHENTICATED',message:'Authentication required'} }); const payload = jwt.verify(token, process.env.JWT_ACCESS_SECRET); req.user = await User.findById(payload.sub).select('-passwordHash'); if (!req.user?.active) return res.status(401).json({ success:false, error:{code:'INVALID_SESSION',message:'Session is no longer valid'} }); next(); } catch { res.status(401).json({ success:false, error:{code:'INVALID_TOKEN',message:'Your session has expired'} }); } }
+export const allowRoles = (...roles) => (req,res,next) => roles.includes(req.user.role) ? next() : res.status(403).json({success:false,error:{code:'FORBIDDEN',message:'You do not have permission for this action'}});

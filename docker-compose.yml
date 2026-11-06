@@ -1,0 +1,15 @@
+services:
+  mongo:
+    image: mongo:7
+    ports: ["27017:27017"]
+    volumes: ["mongo_data:/data/db"]
+  api:
+    build: ./apps/api
+    environment:
+      PORT: 4000
+      MONGODB_URI: mongodb://mongo:27017/gateway_lms
+      JWT_ACCESS_SECRET: development-only-change-me-use-32-or-more-characters
+    ports: ["4000:4000"]
+    depends_on: [mongo]
+volumes:
+  mongo_data:

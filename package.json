@@ -1,0 +1,21 @@
+{
+  "name": "gateway-lms",
+  "private": true,
+  "workspaces": [
+    "apps/web",
+    "apps/api"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev -w @gateway/web\" \"npm run dev -w @gateway/api\"",
+    "build": "npm run build -w @gateway/web",
+    "start": "npm run start -w @gateway/api",
+    "test:mobile": "npm run test:mobile -w @gateway/web",
+    "create-admin": "npm run create-admin -w @gateway/api --"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

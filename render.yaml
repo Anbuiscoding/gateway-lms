@@ -1,0 +1,37 @@
+# Render Blueprint for the Gateway LMS API (REST + live classes over WebSocket).
+# Render dashboard: New > Blueprint > pick this repository. See DEPLOYMENT.md.
+services:
+  - type: web
+    name: gateway-lms-api
+    runtime: node
+    plan: free            # change to starter for a service that never sleeps
+    region: singapore     # oregon, ohio, virginia, frankfurt or singapore
+    autoDeploy: true
+    buildCommand: npm install --workspace=@gateway/api
+    startCommand: npm run start --workspace=@gateway/api
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI          # your MongoDB Atlas connection string
+        sync: false
+      - key: CLIENT_URL           # your Vercel address, e.g. https://gateway-lms.vercel.app (no trailing slash)
+        sync: false
+      - key: JWT_ACCESS_SECRET    # generated for you
+        generateValue: true
+      - key: ADMIN_SIGNUP_CODE    # generated for you; find it under Environment after the first deploy
+        generateValue: true
+      - key: ORG_TIMEZONE
+        value: Asia/Kolkata
+      - key: ORG_LATE_AFTER
+        value: "10:00"
+      - key: SUPPORT_EMAIL        # optional, shown on the Support and sign-in pages
+        sync: false
+      - key: SUPPORT_PHONE        # optional
+        sync: false
+      - key: SUPPORT_HOURS        # optional, e.g. Mon to Fri, 9 am to 6 pm
+        sync: false
+      - key: CODE_RUNNER_URL      # optional, for Java, C++, Go and more
+        sync: false
